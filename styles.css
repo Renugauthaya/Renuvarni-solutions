@@ -330,3 +330,52 @@ body{ font-size:15px; line-height:1.65 }
 
 /* Form submit area */
 .form-btn-row{ margin-top:8px }
+
+/* ================================================================
+   WHITE SPACE & VISIBILITY FIX
+   ================================================================ */
+
+/* Ensure .reveal elements are always visible when .visible is added */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease }
+.reveal.visible { opacity: 1 !important; transform: none !important }
+
+/* Reduce section spacing — was 72px, now tighter */
+.section { padding: 56px 0 }
+.services-section { padding: 56px 0 }
+.solutions-section { padding: 48px 0 56px }
+.tech-section { padding: 40px 0 }
+.about-section { padding: 56px 0 }
+.testimonials-section { padding: 56px 0 }
+.contact-section { padding: 56px 0 }
+
+/* Stats section tighter */
+.stats-section { padding: 2rem 0 }
+
+/* Trust strip tighter */
+.trust-strip { padding: 0 }
+.trust-grid { padding: 20px 0 }
+
+/* Industry section tighter */
+.industry-section { padding: 22px 0 }
+
+/* Footer spacing */
+.footer-main { padding: 2rem 0 }
+
+/* Hero visual — no extra bottom gap */
+.hero-content { padding-top: 20px; padding-bottom: 20px }
+.hero-bottom { padding: 10px 0 }
+
+/* Service card min-height cleanup */
+.service-card h3 { min-height: 0 }
+
+/* Testimonial viewport — no overflow creates blank area */
+.testi-viewport { overflow: hidden }
+.testi-track { transition: transform 0.45s ease }
+
+/* Footer grid fix */
+.footer-main { display: grid; grid-template-columns: 1.8fr 1fr 1fr; gap: 2rem; align-items: start; border-bottom: 1px solid rgba(255,255,255,0.1) }
+.footer-col-brand > p { color: rgba(255,255,255,0.45); font-size: 13px; margin: 0.4rem 0 0.85rem }
+.footer-col-title { color: rgba(255,255,255,0.8); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.8rem }
+.footer-col-links .footer-links { display: flex; flex-direction: column; gap: 0.45rem }
+@media(max-width:768px) { .footer-main { grid-template-columns: 1fr; gap: 1.5rem } }
+@media(max-width:600px) { .section,.about-section,.contact-section,.testimonials-section { padding: 40px 0 } }
