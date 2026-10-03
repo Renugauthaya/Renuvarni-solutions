@@ -379,3 +379,53 @@ body{ font-size:15px; line-height:1.65 }
 .footer-col-links .footer-links { display: flex; flex-direction: column; gap: 0.45rem }
 @media(max-width:768px) { .footer-main { grid-template-columns: 1fr; gap: 1.5rem } }
 @media(max-width:600px) { .section,.about-section,.contact-section,.testimonials-section { padding: 40px 0 } }
+
+/* ================================================================
+   HOSTING FIX — Content visible by default (CSS-first reveal)
+   JS adds .js-ready to body to enable smooth animations.
+   Without JS or on slow networks: everything is always visible.
+   ================================================================ */
+
+/* Step 1: Override ALL previous .reveal opacity:0 rules */
+.reveal,
+.reveal.visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Step 2: When JS has loaded and added .js-ready, enable animations */
+.js-ready .reveal {
+  opacity: 0 !important;
+  transform: translateY(20px) !important;
+  transition: opacity 0.55s ease, transform 0.55s ease !important;
+}
+.js-ready .reveal.visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Hero canvas behind all content */
+#heroCanvas {
+  position: absolute !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+
+/* Hero content always on top */
+.hero-content {
+  position: relative !important;
+  z-index: 2 !important;
+}
+.hero-copy,
+.hero-visual {
+  position: relative;
+  z-index: 2;
+}
+.hero-bottom {
+  position: relative;
+  z-index: 2;
+}
+.whatsapp-float {
+  z-index: 1000 !important;
+}
