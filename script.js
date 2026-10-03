@@ -273,3 +273,165 @@ if (waAlt && form) {
     }
   });
 }
+
+/* ================================================================
+   3D EFFECTS — Mouse Tilt, Glare, Particles, Parallax
+   ================================================================ */
+
+/* Mark body so CSS can scope hover overrides */
+document.body.classList.add('tilt-active');
+
+/* -- Universal 3D Mouse-Tilt + Glare -------------------------- */
+function apply3DTilt(selector, opts = {}) {
+  const { maxTilt = 12, scale = 1.05, maxGlare = 0.28 } = opts;
+  document.querySelectorAll(selector).forEach(card => {
+    /* ensure position:relative for glare overlay */
+    if (getComputedStyle(card).position === 'static') card.style.position = 'relative';
+    card.style.overflow = 'hidden';
+
+    const glare = document.createElement('div');
+    glare.className = 'tilt-glare';
+    card.appendChild(glare);
+
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const x  = e.clientX - r.left, y = e.clientY - r.top;
+      const cx = r.width / 2,        cy = r.height / 2;
+      const rX = ((y - cy) / cy) * -maxTilt;
+      const rY = ((x - cx) / cx) *  maxTilt;
+
+      card.style.transform = perspective(900px) rotateX(deg) rotateY(deg) scale3d(,,);
+      card.style.zIndex    = '3';
+
+      const angle   = Math.atan2(y - cy, x - cx) * 57.296 + 90;
+      const opacity = Math.min(Math.hypot(x - cx, y - cy) / Math.hypot(cx, cy) * maxGlare, maxGlare);
+      glare.style.background = linear-gradient(deg,rgba(255,255,255,) 0%,transparent 65%);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+      card.style.zIndex    = '';
+      glare.style.background = 'transparent';
+    });
+  });
+}
+
+/* Apply to service cards, solution tiles, testimonial cards */
+apply3DTilt('.service-card');
+apply3DTilt('.solution-tile', { maxTilt: 16, scale: 1.07, maxGlare: 0.2 });
+apply3DTilt('.testi-card',    { maxTilt:  8, scale: 1.03, maxGlare: 0.15 });
+
+/* -- Hero Visual — Mouse-Tracking 3D Depth --------------------- */
+(function () {
+  const hero   = document.querySelector('.hero');
+  const visual = document.querySelector('.hero-visual');
+  if (!hero || !visual) return;
+
+  hero.addEventListener('mousemove', e => {
+    const r  = hero.getBoundingClientRect();
+    const x  = e.clientX - r.left, y = e.clientY - r.top;
+    const cx = r.width / 2,        cy = r.height / 2;
+    const rX = ((y - cy) / cy) * -6;
+    const rY = ((x - cx) / cx) *  9;
+    visual.style.transform  = perspective(1400px) rotateX(deg) rotateY(deg);
+    visual.style.transition = 'transform 0.08s ease';
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    visual.style.transform  = '';
+    visual.style.transition = 'transform 0.9s ease';
+  });
+})();
+
+/* -- 3D Floating Particle Network (Hero Canvas) ---------------- */
+(function () {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+
+  const cvs = document.createElement('canvas');
+  cvs.id = 'heroCanvas';
+  hero.prepend(cvs);
+
+  const ctx = cvs.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = cvs.width  = hero.offsetWidth;
+    H = cvs.height = hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  const COUNT = 75;
+  const pts   = Array.from({ length: COUNT }, () => ({
+    x  : Math.random() * 1,   /* normalised 0-1 */
+    y  : Math.random() * 1,
+    z  : Math.random(),        /* depth 0=far 1=near */
+    vx : (Math.random() - 0.5) * 0.0003,
+    vy : (Math.random() - 0.5) * 0.0003
+  }));
+
+  let mx = 0.5, my = 0.5;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX / window.innerWidth;
+    my = e.clientY / window.innerHeight;
+  }, { passive: true });
+
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+
+    pts.forEach(p => {
+      /* gentle drift + subtle mouse parallax */
+      p.x += p.vx + (mx - 0.5) * 0.00012 * p.z;
+      p.y += p.vy + (my - 0.5) * 0.00012 * p.z;
+      if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
+      if (p.y < 0) p.y = 1; if (p.y > 1) p.y = 0;
+
+      const px = p.x * W, py = p.y * H;
+      const r  = 0.8 + p.z * 2.2;
+      const a  = 0.12 + p.z * 0.4;
+
+      ctx.beginPath();
+      ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fillStyle = gba(100,180,255,);
+      ctx.fill();
+    });
+
+    /* Draw connecting lines between nearby particles */
+    for (let i = 0; i < pts.length; i++) {
+      for (let j = i + 1; j < pts.length; j++) {
+        const a = pts[i], b = pts[j];
+        const dx = (a.x - b.x) * W, dy = (a.y - b.y) * H;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < 95) {
+          const alpha = (1 - d / 95) * 0.07 * (a.z + b.z);
+          ctx.beginPath();
+          ctx.moveTo(a.x * W, a.y * H);
+          ctx.lineTo(b.x * W, b.y * H);
+          ctx.strokeStyle = gba(80,170,255,);
+          ctx.lineWidth   = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* -- Hero Text Parallax on Scroll ------------------------------ */
+(function () {
+  const copy = document.querySelector('.hero-copy');
+  if (!copy) return;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y < 500) copy.style.transform = 	ranslateY(px);
+  }, { passive: true });
+})();
+
+/* -- 3D Heading Underline Trigger ------------------------------ */
+const headingObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view'); });
+}, { threshold: 0.5 });
+document.querySelectorAll('.section-heading h2, .about-copy h2, .contact-copy h2')
+  .forEach(h => headingObserver.observe(h));
