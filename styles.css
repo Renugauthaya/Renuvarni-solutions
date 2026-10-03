@@ -429,3 +429,31 @@ body{ font-size:15px; line-height:1.65 }
 .whatsapp-float {
   z-index: 1000 !important;
 }
+
+/* ================================================================
+   SOLUTION CARDS V2 — SVG icon + description + arrow
+   ================================================================ */
+.solution-grid-v2{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem}
+.sol-card{display:flex;align-items:center;gap:1rem;background:#fff;border:1px solid #e2edf8;border-radius:14px;padding:1.1rem 1.2rem;text-decoration:none;color:var(--text,#102448);transition:all .3s ease;box-shadow:0 2px 12px rgba(8,55,112,.06);position:relative;overflow:hidden}
+.sol-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(8,119,238,.03),transparent);opacity:0;transition:opacity .3s}
+.sol-card:hover{transform:translateY(-4px) scale(1.015);box-shadow:0 12px 32px rgba(8,55,112,.14);border-color:#b5d3f8}
+.sol-card:hover::before{opacity:1}
+.sol-icon-box{width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(0,0,0,.18)}
+.sol-body{flex:1;min-width:0}
+.sol-body b{display:block;font-size:13.5px;font-weight:700;color:#0f2447;line-height:1.3;margin-bottom:4px}
+.sol-body p{font-size:11.5px;color:var(--muted,#5c6c83);margin:0;line-height:1.55}
+.sol-arr{font-size:1.1rem;color:#b5c9e0;flex-shrink:0;transition:all .3s;margin-left:auto;padding-left:.5rem}
+.sol-card:hover .sol-arr{color:var(--blue,#0877ee);transform:translateX(4px)}
+@media(max-width:900px){.solution-grid-v2{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.solution-grid-v2{grid-template-columns:1fr}}
+
+/* ================================================================
+   TECH GRID V2 — Brand-colored icon + name
+   ================================================================ */
+.tech-grid-v2{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:.85rem;margin-top:1.5rem}
+.tc{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:.85rem .5rem;background:#fff;border:1px solid #e2edf8;border-radius:12px;cursor:default;transition:all .3s ease;box-shadow:0 2px 8px rgba(8,55,112,.05);border-top:3px solid var(--tc,#0877ee)}
+.tc:hover{transform:translateY(-5px) scale(1.04);box-shadow:0 10px 28px rgba(8,55,112,.13);border-color:var(--tc,#0877ee)}
+.tc-icon{width:52px;height:52px;border-radius:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:transform .3s}
+.tc:hover .tc-icon{transform:scale(1.1) rotate(-3deg)}
+.tc-name{font-size:11px;font-weight:600;color:#1e3a5f;text-align:center;line-height:1.3}
+@media(max-width:600px){.tech-grid-v2{grid-template-columns:repeat(3,1fr)}}
