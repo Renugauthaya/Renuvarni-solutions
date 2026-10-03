@@ -4,14 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Renuvarni Solutions provides SAP Business One consulting, ERP integrations, manufacturing tracking, web applications and website development." />
-  <title>Renuvarni Solutions | SAP & Digital Solutions</title>
+  <title>Renuvarni Solutions | SAP &amp; Digital Solutions</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <!-- EmailJS SDK — fill in your keys in script.js to enable real email sending -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
-  <header class="site-header">
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite">
+    <span class="toast-icon" id="toastIcon"></span>
+    <span class="toast-msg" id="toastMsg"></span>
+  </div>
+
+  <!-- Floating WhatsApp Button -->
+  <a class="whatsapp-float" href="https://wa.me/919789304792?text=Hello%2C%20I%20visited%20your%20website%20and%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span class="wa-pulse"></span>
+  </a>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
     <div class="container nav-wrap">
       <a class="brand" href="#home" aria-label="Renuvarni Solutions home">
         <span class="brand-mark">R</span>
@@ -19,60 +41,233 @@
       </a>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav class="nav" id="mainNav">
-        <a class="active" href="#home">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#solutions">Solutions</a><a href="#technologies">Technologies</a><a href="#contact">Contact</a>
-        <a class="nav-cta" href="#contact">Get a Quote <span>↗</span></a>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#technologies">Technologies</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+        <a class="nav-cta" href="#contact">Get a Quote <span>&#8599;</span></a>
       </nav>
     </div>
   </header>
 
   <main>
+    <!-- HERO -->
     <section class="hero" id="home">
       <div class="hero-grid"></div>
       <div class="container hero-content">
         <div class="hero-copy">
           <p class="eyebrow light">SAP BUSINESS ONE <i></i> INTEGRATION <i></i> CUSTOM SOLUTIONS</p>
-          <h1>Turning Business Ideas into <span>Smart Solutions</span></h1>
+          <h1>Turning Business Ideas into <span id="typedText" class="typed-word">Smart Solutions</span><span class="typed-cursor" aria-hidden="true">|</span></h1>
           <p class="hero-description">Renuvarni Solutions provides expert SAP Business One technical consulting, integrations and custom software development to help businesses streamline operations, improve productivity and achieve digital transformation.</p>
-          <div class="hero-actions"><a class="btn btn-primary" href="#services">Explore Services <b>→</b></a><a class="btn btn-outline" href="#contact"><b class="chat-icon">◌</b> Contact Us</a></div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#services">Explore Services <b>&#8594;</b></a>
+            <a class="btn btn-wa" href="https://wa.me/919789304792?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener" id="heroWaBtn">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              WhatsApp Us
+            </a>
+            <a class="btn btn-outline" href="#contact"><b class="chat-icon">&#9675;</b> Contact Us</a>
+          </div>
           <div class="hero-tags"><span>ERP Expertise</span><span>Process Automation</span><span>Personalized Support</span></div>
         </div>
         <div class="hero-visual" aria-label="Illustration of business software dashboards">
           <div class="visual-glow"></div>
           <div class="floating-label">SAP Business One <strong>ERP</strong></div>
           <div class="dashboard">
-            <div class="dash-side"><div class="dash-logo">RS</div><span class="selected">▦ &nbsp; Dashboard</span><span>▤ &nbsp; Sales</span><span>▣ &nbsp; Purchasing</span><span>▥ &nbsp; Inventory</span><span>⚙ &nbsp; Settings</span></div>
-            <div class="dash-main"><div class="dash-top"><b>Business Overview</b><span>⌕ &nbsp; ◉</span></div><div class="metric-row"><div class="metric"><small>Sales Orders</small><b>125</b><em>↗ 12.8%</em></div><div class="metric"><small>Purchase Orders</small><b>48</b><em>↗ 8.2%</em></div><div class="metric"><small>Items</small><b>1,280</b><em>Active</em></div></div><div class="chart-card"><div class="chart-heading">Sales Overview <small>Last 6 months</small></div><div class="bars"><i style="height:38%"></i><i style="height:58%"></i><i style="height:47%"></i><i style="height:74%"></i><i style="height:62%"></i><i style="height:92%"></i><i style="height:78%"></i><i style="height:100%"></i></div><div class="chart-months"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span></div></div><div class="dash-bottom"><div><small>Inventory Status</small><div class="donut"></div></div><div class="activity"><small>Recent Activity</small><p><i></i> Sales order created</p><p><i></i> Stock transfer posted</p><p><i></i> Vendor updated</p></div></div></div>
+            <div class="dash-side"><div class="dash-logo">RS</div><span class="selected">&#9638; &nbsp; Dashboard</span><span>&#9636; &nbsp; Sales</span><span>&#9635; &nbsp; Purchasing</span><span>&#9637; &nbsp; Inventory</span><span>&#9881; &nbsp; Settings</span></div>
+            <div class="dash-main"><div class="dash-top"><b>Business Overview</b><span>&#8981; &nbsp; &#9673;</span></div><div class="metric-row"><div class="metric"><small>Sales Orders</small><b>125</b><em>&#8599; 12.8%</em></div><div class="metric"><small>Purchase Orders</small><b>48</b><em>&#8599; 8.2%</em></div><div class="metric"><small>Items</small><b>1,280</b><em>Active</em></div></div><div class="chart-card"><div class="chart-heading">Sales Overview <small>Last 6 months</small></div><div class="bars"><i style="height:38%"></i><i style="height:58%"></i><i style="height:47%"></i><i style="height:74%"></i><i style="height:62%"></i><i style="height:92%"></i><i style="height:78%"></i><i style="height:100%"></i></div><div class="chart-months"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span></div></div><div class="dash-bottom"><div><small>Inventory Status</small><div class="donut"></div></div><div class="activity"><small>Recent Activity</small><p><i></i> Sales order created</p><p><i></i> Stock transfer posted</p><p><i></i> Vendor updated</p></div></div></div>
           </div>
-          <div class="phone"><div class="phone-notch"></div><b>Operations</b><div class="phone-grid"><span>▣<small>Orders</small></span><span>▤<small>Inventory</small></span><span>⌗<small>Scan QR</small></span><span>▥<small>Reports</small></span></div><div class="phone-line"></div><div class="phone-line short"></div><div class="phone-line"></div></div>
-          <div class="scan-card"><span class="qr">▦</span><span><b>Scan & Track</b><small>Barcode / QR enabled</small></span></div>
+          <div class="phone"><div class="phone-notch"></div><b>Operations</b><div class="phone-grid"><span>&#9635;<small>Orders</small></span><span>&#9636;<small>Inventory</small></span><span>&#8983;<small>Scan QR</small></span><span>&#9637;<small>Reports</small></span></div><div class="phone-line"></div><div class="phone-line short"></div><div class="phone-line"></div></div>
+          <div class="scan-card"><span class="qr">&#9638;</span><span><b>Scan &amp; Track</b><small>Barcode / QR enabled</small></span></div>
         </div>
       </div>
       <div class="hero-bottom container"><span>Built around your business needs</span><span>Practical technology. Measurable workflows.</span></div>
     </section>
 
-    <section class="trust-strip"><div class="container trust-grid"><div class="trust-item"><span class="trust-icon">✓</span><div><b>Reliable Solutions</b><small>Built for real business needs</small></div></div><div class="trust-item"><span class="trust-icon">♢</span><div><b>End-to-End Support</b><small>From development to deployment</small></div></div><div class="trust-item"><span class="trust-icon">♧</span><div><b>Flexible & Personalized</b><small>Direct freelance expertise</small></div></div><div class="trust-item"><span class="trust-icon">⚙</span><div><b>Cost Effective</b><small>Practical solutions and support</small></div></div></div></section>
-
-    <section class="section services-section" id="services"><div class="container"><div class="section-heading"><div><p class="eyebrow">WHAT WE DO</p><h2>Our Services</h2><span class="heading-line"></span></div><p>Comprehensive technical and development services to support your business growth and digital transformation.</p></div>
-      <div class="service-grid">
-        <article class="service-card"><div class="service-top"><span class="service-icon blue">▤</span><span class="service-number">01</span></div><h3>SAP Business One<br>Technical Consulting</h3><ul><li>Add-on Development (UI/DI API)</li><li>SAP HANA SQL & Stored Procedures</li><li>Service Layer API Integration</li><li>Custom Reports & Automation</li><li>E-Invoicing & Third-Party Integrations</li><li>Support & Troubleshooting</li></ul><a href="#contact" class="text-link">Discuss your requirement →</a><div class="card-art art-erp"><span class="art-window"><b>SAP</b><i></i><i></i><i></i><div class="mini-bars"><b></b><b></b><b></b><b></b><b></b></div></span></div></article>
-        <article class="service-card"><div class="service-top"><span class="service-icon green">▦</span><span class="service-number green-text">02</span></div><h3>Manufacturing &<br>Industrial Solutions</h3><ul><li>Barcode & QR Code Applications</li><li>Production Tracking Systems</li><li>Inventory & Warehouse Management</li><li>Batch & Serial Number Tracking</li><li>Label Printing Solutions</li><li>Shop Floor Data Collection</li></ul><a href="#contact" class="text-link">Discuss your requirement →</a><div class="card-art art-manufacturing"><div class="label-roll"><span>▦</span><span>▦</span><span>▦</span></div><div class="scanner"><i></i><b></b></div></div></article>
-        <article class="service-card"><div class="service-top"><span class="service-icon purple">▣</span><span class="service-number purple-text">03</span></div><h3>Web Applications &<br>ERP Integration</h3><ul><li>Angular & Node.js Applications</li><li>SAP B1 Integrated Web Portals</li><li>Vendor Management Systems</li><li>Purchase Order & ASN Portals</li><li>API Development & Integration</li><li>Custom Business Process Automation</li></ul><a href="#contact" class="text-link">Discuss your requirement →</a><div class="card-art art-web"><div class="web-screen"><div></div><div></div><div></div><span></span></div><div class="web-mobile"></div></div></article>
-        <article class="service-card"><div class="service-top"><span class="service-icon orange">◎</span><span class="service-number orange-text">04</span></div><h3>Website Design &<br>Development</h3><ul><li>Corporate Website Development</li><li>Responsive Website Design</li><li>Business Web Portals</li><li>Admin Dashboards</li><li>Website Maintenance & Support</li><li>Domain & Hosting Assistance</li></ul><a href="#contact" class="text-link">Discuss your requirement →</a><div class="card-art art-design"><div class="device desktop"><div></div><i></i><i></i></div><div class="device tablet"></div><div class="device mobile"></div></div></article>
+    <!-- STATS COUNTERS -->
+    <section class="stats-section" aria-label="Key statistics">
+      <div class="container stats-grid">
+        <div class="stat-item"><span class="stat-num" data-target="5">0</span><span class="stat-plus">+</span><small>Years Experience</small></div>
+        <div class="stat-item"><span class="stat-num" data-target="50">0</span><span class="stat-plus">+</span><small>Projects Delivered</small></div>
+        <div class="stat-item"><span class="stat-num" data-target="30">0</span><span class="stat-plus">+</span><small>Happy Clients</small></div>
+        <div class="stat-item"><span class="stat-num" data-target="4">0</span><small>Service Areas</small></div>
       </div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="trust-strip"><div class="container trust-grid">
+      <div class="trust-item reveal"><span class="trust-icon">&#10003;</span><div><b>Reliable Solutions</b><small>Built for real business needs</small></div></div>
+      <div class="trust-item reveal"><span class="trust-icon">&#9826;</span><div><b>End-to-End Support</b><small>From development to deployment</small></div></div>
+      <div class="trust-item reveal"><span class="trust-icon">&#9767;</span><div><b>Flexible &amp; Personalized</b><small>Direct freelance expertise</small></div></div>
+      <div class="trust-item reveal"><span class="trust-icon">&#9881;</span><div><b>Cost Effective</b><small>Practical solutions and support</small></div></div>
     </div></section>
 
-    <section class="about-section section" id="about"><div class="container about-grid"><div class="about-visual"><div class="about-orbit orbit-one"></div><div class="about-orbit orbit-two"></div><div class="about-core"><span>R</span><b>Renuvarni<br>Solutions</b><small>Technology partner</small></div><div class="orbit-chip chip-one">SAP B1</div><div class="orbit-chip chip-two">API</div><div class="orbit-chip chip-three">QR</div><div class="orbit-chip chip-four">Web</div></div><div class="about-copy"><p class="eyebrow">ABOUT RENU VARNI SOLUTIONS</p><h2>Technology that works the way your business does.</h2><p>Renuvarni Solutions is a personal freelance technology brand focused on SAP Business One technical services, ERP integrations and practical custom software for business operations.</p><p>From improving an existing SAP workflow to building a connected web portal or shop-floor tracking application, the goal is to deliver maintainable solutions aligned with your processes.</p><div class="about-points"><span>✓ Clear communication</span><span>✓ Business-focused development</span><span>✓ Support from planning to delivery</span><span>✓ Scalable, maintainable solutions</span></div><a class="btn btn-primary" href="#contact">Work With Me <b>→</b></a></div></div></section>
+    <!-- SERVICES -->
+    <section class="section services-section" id="services">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">WHAT WE DO</p><h2>Our Services</h2><span class="heading-line"></span></div>
+          <p>Comprehensive technical and development services to support your business growth and digital transformation.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card reveal"><div class="service-top"><span class="service-icon blue">&#9636;</span><span class="service-number">01</span></div><h3>SAP Business One<br>Technical Consulting</h3><ul><li>Add-on Development (UI/DI API)</li><li>SAP HANA SQL &amp; Stored Procedures</li><li>Service Layer API Integration</li><li>Custom Reports &amp; Automation</li><li>E-Invoicing &amp; Third-Party Integrations</li><li>Support &amp; Troubleshooting</li></ul><a href="#contact" class="text-link">Discuss your requirement &#8594;</a><div class="card-art art-erp"><span class="art-window"><b>SAP</b><i></i><i></i><i></i><div class="mini-bars"><b></b><b></b><b></b><b></b><b></b></div></span></div></article>
+          <article class="service-card reveal"><div class="service-top"><span class="service-icon green">&#9638;</span><span class="service-number green-text">02</span></div><h3>Manufacturing &amp;<br>Industrial Solutions</h3><ul><li>Barcode &amp; QR Code Applications</li><li>Production Tracking Systems</li><li>Inventory &amp; Warehouse Management</li><li>Batch &amp; Serial Number Tracking</li><li>Label Printing Solutions</li><li>Shop Floor Data Collection</li></ul><a href="#contact" class="text-link">Discuss your requirement &#8594;</a><div class="card-art art-manufacturing"><div class="label-roll"><span>&#9638;</span><span>&#9638;</span><span>&#9638;</span></div><div class="scanner"><i></i><b></b></div></div></article>
+          <article class="service-card reveal"><div class="service-top"><span class="service-icon purple">&#9635;</span><span class="service-number purple-text">03</span></div><h3>Web Applications &amp;<br>ERP Integration</h3><ul><li>Angular &amp; Node.js Applications</li><li>SAP B1 Integrated Web Portals</li><li>Vendor Management Systems</li><li>Purchase Order &amp; ASN Portals</li><li>API Development &amp; Integration</li><li>Custom Business Process Automation</li></ul><a href="#contact" class="text-link">Discuss your requirement &#8594;</a><div class="card-art art-web"><div class="web-screen"><div></div><div></div><div></div><span></span></div><div class="web-mobile"></div></div></article>
+          <article class="service-card reveal"><div class="service-top"><span class="service-icon orange">&#9677;</span><span class="service-number orange-text">04</span></div><h3>Website Design &amp;<br>Development</h3><ul><li>Corporate Website Development</li><li>Responsive Website Design</li><li>Business Web Portals</li><li>Admin Dashboards</li><li>Website Maintenance &amp; Support</li><li>Domain &amp; Hosting Assistance</li></ul><a href="#contact" class="text-link">Discuss your requirement &#8594;</a><div class="card-art art-design"><div class="device desktop"><div></div><i></i><i></i></div><div class="device tablet"></div><div class="device mobile"></div></div></article>
+        </div>
+      </div>
+    </section>
 
-    <section class="industry-section"><div class="container industry-wrap"><div><p class="eyebrow">INDUSTRY FOCUS</p><h2>Industries We Support</h2></div><div class="industry-list"><div><span>⚙</span><b>Manufacturing</b></div><div><span>▣</span><b>Trading & Distribution</b></div><div><span>🛒</span><b>Retail</b></div><div><span>▥</span><b>Construction</b></div><div><span>✚</span><b>Healthcare</b></div><div><span>＋</span><b>And More</b></div></div></div></section>
+    <!-- ABOUT -->
+    <section class="about-section section" id="about">
+      <div class="container about-grid">
+        <div class="about-visual reveal"><div class="about-orbit orbit-one"></div><div class="about-orbit orbit-two"></div><div class="about-core"><span>R</span><b>Renuvarni<br>Solutions</b><small>Technology partner</small></div><div class="orbit-chip chip-one">SAP B1</div><div class="orbit-chip chip-two">API</div><div class="orbit-chip chip-three">QR</div><div class="orbit-chip chip-four">Web</div></div>
+        <div class="about-copy reveal">
+          <p class="eyebrow">ABOUT RENUVARNI SOLUTIONS</p>
+          <h2>Technology that works the way your business does.</h2>
+          <p>Renuvarni Solutions is a personal freelance technology brand focused on SAP Business One technical services, ERP integrations and practical custom software for business operations.</p>
+          <p>From improving an existing SAP workflow to building a connected web portal or shop-floor tracking application, the goal is to deliver maintainable solutions aligned with your processes.</p>
+          <div class="about-points"><span>&#10003; Clear communication</span><span>&#10003; Business-focused development</span><span>&#10003; Support from planning to delivery</span><span>&#10003; Scalable, maintainable solutions</span></div>
+          <div class="about-actions">
+            <a class="btn btn-primary" href="#contact">Work With Me <b>&#8594;</b></a>
+            <a class="btn btn-wa" href="https://wa.me/919789304792?text=Hello%2C%20I%20would%20like%20to%20work%20with%20Renuvarni%20Solutions." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <section class="section solutions-section" id="solutions"><div class="container"><div class="section-heading"><div><p class="eyebrow">BUSINESS SOLUTIONS</p><h2>Solutions Designed for Real Workflows</h2></div><p>Custom-built and integrated tools to help teams capture data, reduce manual work and gain operational visibility.</p></div><div class="solution-grid"><a class="solution-tile" href="#contact"><div class="solution-picture production"><span>▣</span></div><b>Production Tracking System</b></a><a class="solution-tile" href="#contact"><div class="solution-picture warehouse"><span>▤</span></div><b>Inventory & Warehouse Management</b></a><a class="solution-tile" href="#contact"><div class="solution-picture vendor"><span>▦</span></div><b>Vendor Management Portal</b></a><a class="solution-tile" href="#contact"><div class="solution-picture printing"><span>▧</span></div><b>Barcode & QR Label Printing</b></a><a class="solution-tile" href="#contact"><div class="solution-picture dashboard-pic"><span>▥</span></div><b>Custom Web Applications</b></a><a class="solution-tile" href="#contact"><div class="solution-picture integration"><span>⇄</span></div><b>SAP B1 Integrations</b></a></div></div></section>
+    <!-- INDUSTRY -->
+    <section class="industry-section"><div class="container industry-wrap"><div><p class="eyebrow">INDUSTRY FOCUS</p><h2>Industries We Support</h2></div><div class="industry-list"><div class="reveal"><span>&#9881;</span><b>Manufacturing</b></div><div class="reveal"><span>&#9635;</span><b>Trading &amp; Distribution</b></div><div class="reveal"><span>&#128722;</span><b>Retail</b></div><div class="reveal"><span>&#9637;</span><b>Construction</b></div><div class="reveal"><span>&#10010;</span><b>Healthcare</b></div><div class="reveal"><span>&#65291;</span><b>And More</b></div></div></div></section>
 
-    <section class="tech-section section" id="technologies"><div class="container tech-wrap"><div><p class="eyebrow">OUR TECHNOLOGIES</p><h2>Technologies<br>We Work With</h2><p>Using proven platforms and tools to build dependable business applications.</p></div><div class="tech-grid"><span class="tech-logo sap">SAP <small>Business One</small></span><span class="tech-logo hana">SAP <small>HANA</small></span><span class="tech-logo">C# <small>.NET</small></span><span class="tech-logo angular">A</span><span class="tech-logo node">⬡ <small>node</small></span><span class="tech-logo sql">SQL <small>Server</small></span><span class="tech-logo pg">◉ <small>PostgreSQL</small></span><span class="tech-logo html">5 <small>HTML</small></span><span class="tech-logo css">3 <small>CSS</small></span><span class="tech-logo ts">TS <small>TypeScript</small></span><span class="tech-logo python">Py <small>Python</small></span><span class="tech-logo azure">☁ <small>Azure</small></span><span class="tech-logo">▲ <small>Vercel</small></span></div></div></section>
+    <!-- SOLUTIONS -->
+    <section class="section solutions-section" id="solutions">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">BUSINESS SOLUTIONS</p><h2>Solutions Designed for Real Workflows</h2></div><p>Custom-built and integrated tools to help teams capture data, reduce manual work and gain operational visibility.</p></div>
+        <div class="solution-grid">
+          <a class="solution-tile reveal" href="#contact"><div class="solution-picture production"><span>&#9635;</span></div><b>Production Tracking System</b></a>
+          <a class="solution-tile reveal" href="#contact"><div class="solution-picture warehouse"><span>&#9636;</span></div><b>Inventory &amp; Warehouse Management</b></a>
+          <a class="solution-tile reveal" href="#contact"><div class="solution-picture vendor"><span>&#9638;</span></div><b>Vendor Management Portal</b></a>
+          <a class="solution-tile reveal" href="#contact"><div class="solution-picture printing"><span>&#9639;</span></div><b>Barcode &amp; QR Label Printing</b></a>
+          <a class="solution-tile reveal" href="#contact"><div class="solution-picture dashboard-pic"><span>&#9637;</span></div><b>Custom Web Applications</b></a>
+          <a class="solution-tile reveal" href="#contact"><div class="solution-picture integration"><span>&#8644;</span></div><b>SAP B1 Integrations</b></a>
+        </div>
+      </div>
+    </section>
 
-    <section class="contact-section section" id="contact"><div class="container contact-grid"><div class="contact-copy"><p class="eyebrow light">LET'S CONNECT</p><h2>Let's Build Something Great Together</h2><p>Whether you need SAP B1 development, manufacturing solutions, a web application or a professional website, Renuvarni Solutions is ready to help.</p><div class="contact-detail"><span>✉</span><div><small>Email</small><b>uthayam1993@gmail.com</b></div></div><div class="contact-detail"><span>☏</span><div><small>Phone / WhatsApp</small><b>+91 97893 04792</b></div></div></div><form class="contact-form" id="contactForm"><h3>Tell us about your project</h3><p>Share a few details and we'll get in touch.</p><div class="form-row"><label>Your Name<input name="name" placeholder="Full name" required /></label><label>Email Address<input type="email" name="email" placeholder="name@company.com" required /></label></div><label>Service Required<select name="service" required><option value="" disabled selected>Select a service</option><option>SAP Business One Consulting</option><option>ERP Integration</option><option>Manufacturing / Barcode / QR Solution</option><option>Web Application / Vendor Portal</option><option>Website Design</option><option>Other</option></select></label><label>Project Details<textarea name="message" rows="4" placeholder="Briefly describe your requirement..."></textarea></label><button class="btn btn-primary submit-btn" type="submit">Send Inquiry <b>→</b></button><p class="form-feedback" id="formFeedback" aria-live="polite"></p></form></div></section>
+    <!-- TECHNOLOGIES -->
+    <section class="tech-section section" id="technologies"><div class="container tech-wrap"><div><p class="eyebrow">OUR TECHNOLOGIES</p><h2>Technologies<br>We Work With</h2><p>Using proven platforms and tools to build dependable business applications.</p></div><div class="tech-grid"><span class="tech-logo sap reveal">SAP <small>Business One</small></span><span class="tech-logo hana reveal">SAP <small>HANA</small></span><span class="tech-logo reveal">C# <small>.NET</small></span><span class="tech-logo angular reveal">A</span><span class="tech-logo node reveal">&#11041; <small>node</small></span><span class="tech-logo sql reveal">SQL <small>Server</small></span><span class="tech-logo pg reveal">&#9673; <small>PostgreSQL</small></span><span class="tech-logo html reveal">5 <small>HTML</small></span><span class="tech-logo css reveal">3 <small>CSS</small></span><span class="tech-logo ts reveal">TS <small>TypeScript</small></span><span class="tech-logo python reveal">Py <small>Python</small></span><span class="tech-logo azure reveal">&#9729; <small>Azure</small></span><span class="tech-logo reveal">&#9650; <small>Vercel</small></span></div></div></section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section testimonials-section" id="testimonials">
+      <div class="container">
+        <div class="section-heading"><div><p class="eyebrow">CLIENT FEEDBACK</p><h2>What Clients Say</h2><span class="heading-line"></span></div><p>Real feedback from businesses that have worked with Renuvarni Solutions.</p></div>
+        <div class="testi-viewport"><div class="testi-track" id="testiTrack">
+          <div class="testi-card"><div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Renuvarni Solutions transformed our SAP workflow completely. The custom add-on development was exactly what we needed — delivered on time and within budget."</p><div class="testi-author"><div class="testi-avatar">A</div><div><b>Arun Kumar</b><small>Operations Manager, Manufacturing Co.</small></div></div></div>
+          <div class="testi-card"><div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"The barcode and QR tracking system built for our warehouse has saved us hours of manual work every day. Excellent technical knowledge and great support throughout."</p><div class="testi-author"><div class="testi-avatar">S</div><div><b>Suresh Babu</b><small>Warehouse Head, Distribution Ltd.</small></div></div></div>
+          <div class="testi-card"><div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Outstanding work on our vendor portal. The SAP B1 integration was seamless and our procurement team loves the new interface. Highly recommended."</p><div class="testi-author"><div class="testi-avatar">P</div><div><b>Priya Nair</b><small>Procurement Lead, Trading Firm</small></div></div></div>
+          <div class="testi-card"><div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>"Professional, responsive, and technically excellent. Delivered a complete production tracking system that our shop floor team adopted instantly. Superb results."</p><div class="testi-author"><div class="testi-avatar">R</div><div><b>Ramesh Chandran</b><small>Plant Manager, Industrial Group</small></div></div></div>
+        </div></div>
+        <div class="testi-controls">
+          <button class="testi-btn" id="testiPrev" aria-label="Previous">&#8592;</button>
+          <div class="testi-dots" id="testiDots"></div>
+          <button class="testi-btn" id="testiNext" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section section" id="contact">
+      <div class="container contact-grid">
+        <div class="contact-copy reveal">
+          <p class="eyebrow light">LET'S CONNECT</p>
+          <h2>Let's Build Something Great Together</h2>
+          <p>Whether you need SAP B1 development, manufacturing solutions, a web application or a professional website, Renuvarni Solutions is ready to help.</p>
+
+          <a class="contact-channel email-channel" href="mailto:uthayam1993@gmail.com?subject=Project%20Inquiry%20from%20Website">
+            <span class="channel-icon">&#9993;</span>
+            <div><small>Send Email</small><b>uthayam1993@gmail.com</b></div>
+            <span class="channel-arrow">&#8594;</span>
+          </a>
+          <a class="contact-channel wa-channel" href="https://wa.me/919789304792?text=Hello%2C%20I%20visited%20your%20website%20and%20would%20like%20to%20discuss%20a%20project." target="_blank" rel="noopener">
+            <span class="channel-icon">
+              <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </span>
+            <div><small>WhatsApp Chat</small><b>+91 97893 04792</b></div>
+            <span class="channel-arrow">&#8594;</span>
+          </a>
+
+          <p class="response-note">&#9889; Usually responds within a few hours on business days.</p>
+        </div>
+
+        <form class="contact-form reveal" id="contactForm" novalidate>
+          <h3>Tell us about your project</h3>
+          <p>Fill in the form and we'll reply via email or WhatsApp.</p>
+          <div class="form-row">
+            <label>Your Name<input name="name" id="fname" placeholder="Full name" required /></label>
+            <label>Email Address<input type="email" name="email" id="femail" placeholder="name@company.com" required /></label>
+          </div>
+          <label>Phone / WhatsApp<input type="tel" name="phone" id="fphone" placeholder="+91 98765 43210" /></label>
+          <label>Service Required
+            <select name="service" id="fservice" required>
+              <option value="" disabled selected>Select a service</option>
+              <option>SAP Business One Consulting</option>
+              <option>ERP Integration</option>
+              <option>Manufacturing / Barcode / QR Solution</option>
+              <option>Web Application / Vendor Portal</option>
+              <option>Website Design</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Project Details<textarea name="message" id="fmessage" rows="4" placeholder="Briefly describe your requirement..."></textarea></label>
+          <div class="form-btn-row">
+            <button class="btn btn-primary submit-btn" type="submit" id="submitBtn">
+              <span id="submitTxt">Send Inquiry &#8594;</span>
+              <span id="submitSpinner" class="spin" style="display:none" aria-hidden="true"></span>
+            </button>
+            <a class="btn-wa-alt" href="https://wa.me/919789304792?text=Hello%2C%20I%20would%20like%20to%20discuss%20a%20project%20with%20Renuvarni%20Solutions." target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              WhatsApp Instead
+            </a>
+          </div>
+          <p class="form-feedback" id="formFeedback" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <footer class="footer"><div class="container footer-main"><a class="brand footer-brand" href="#home"><span class="brand-mark">R</span><span class="brand-name">Renuvarni <small>Solutions</small></span></a><p>Practical technology solutions for connected, efficient businesses.</p><div class="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#solutions">Solutions</a><a href="#contact">Contact</a></div></div><div class="container footer-bottom"><span>© <span id="year"></span> Renuvarni Solutions. All rights reserved.</span><span>Built for better business workflows.</span></div></footer>
+  <footer class="footer">
+    <div class="container footer-main">
+      <div class="footer-col-brand">
+        <a class="brand footer-brand" href="#home"><span class="brand-mark">R</span><span class="brand-name">Renuvarni <small>Solutions</small></span></a>
+        <p>Practical technology solutions for connected, efficient businesses.</p>
+        <div class="footer-contacts">
+          <a href="mailto:uthayam1993@gmail.com" class="footer-contact-link">&#9993; uthayam1993@gmail.com</a>
+          <a href="https://wa.me/919789304792" target="_blank" rel="noopener" class="footer-contact-link footer-wa-link">
+            <svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true"><path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            +91 97893 04792
+          </a>
+        </div>
+      </div>
+      <div class="footer-col-links">
+        <b class="footer-col-title">Quick Links</b>
+        <div class="footer-links"><a href="#about">About</a><a href="#services">Services</a><a href="#solutions">Solutions</a><a href="#technologies">Technologies</a><a href="#testimonials">Testimonials</a><a href="#contact">Contact</a></div>
+      </div>
+      <div class="footer-col-links">
+        <b class="footer-col-title">Services</b>
+        <div class="footer-links"><a href="#services">SAP B1 Consulting</a><a href="#services">ERP Integration</a><a href="#services">Manufacturing Solutions</a><a href="#services">Web Applications</a><a href="#services">Website Design</a></div>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>&#169; <span id="year"></span> Renuvarni Solutions. All rights reserved.</span>
+      <span>Built for better business workflows.</span>
+    </div>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
