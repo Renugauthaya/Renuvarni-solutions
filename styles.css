@@ -214,3 +214,119 @@
 .section-heading h2,.about-copy h2,.contact-copy h2{position:relative;display:inline-block}
 .section-heading h2::after,.about-copy h2::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--blue),#7c3aed);transition:width .55s ease;border-radius:3px}
 .section-heading h2.in-view::after,.about-copy h2.in-view::after{width:100%}
+
+/* ================================================================
+   ICON & FONT SIZE FIX — Prevent Unicode system-font blowout
+   ================================================================ */
+
+/* Force DM Sans + hard size caps on ALL icon containers */
+.service-icon,.trust-icon,.industry-list span,.solution-picture span,
+.channel-icon,.testi-stars,.stat-num,.stat-plus,.tech-logo,
+.back-to-top,.testi-btn,.orbit-chip,.dash-logo,.qr{
+  font-family:'DM Sans',Arial,sans-serif !important;
+  line-height:1;
+  overflow:hidden;
+}
+
+/* Tech logos — hard max size so no symbol escapes the box */
+.tech-logo{
+  font-size:17px !important;
+  max-width:100%;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+/* Contact channel icon — constrain to 36px box max */
+.channel-icon{
+  font-size:1rem !important;
+  width:36px !important;
+  height:36px !important;
+  max-width:36px;
+  max-height:36px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+/* Trust icons */
+.trust-icon{ font-size:22px !important; width:30px; text-align:center }
+
+/* Industry icons */
+.industry-list span{ font-size:20px !important }
+
+/* Solution picture spans */
+.solution-picture span{ font-size:26px !important }
+
+/* Service card icons */
+.service-icon{ font-size:20px !important }
+
+/* -- SCALE UP TYPOGRAPHY — More readable sizes -- */
+
+/* Body text */
+body{ font-size:15px; line-height:1.65 }
+
+/* Service card text — was 10.5px */
+.service-card ul{ font-size:13px !important; line-height:1.9 }
+.service-card h3{ font-size:16px !important }
+.text-link{ font-size:12px !important }
+
+/* Trust strip */
+.trust-item b{ font-size:14px !important }
+.trust-item small{ font-size:12px !important }
+
+/* About copy */
+.about-copy > p:not(.eyebrow){ font-size:15px !important }
+.about-points{ font-size:13px !important }
+
+/* Contact copy */
+.contact-copy > p:not(.eyebrow){ font-size:14px !important }
+.contact-channel b{ font-size:13px !important }
+.contact-channel small{ font-size:11px !important }
+.response-note{ font-size:12px !important }
+
+/* Contact form */
+.contact-form > p{ font-size:13px !important }
+.contact-form label{ font-size:12px !important }
+.contact-form input,.contact-form select,.contact-form textarea{ font-size:13px !important }
+
+/* Testimonials */
+.testi-card > p{ font-size:13.5px !important }
+.testi-author b{ font-size:13px !important }
+.testi-author small{ font-size:11px !important }
+
+/* Footer */
+.footer-col-brand > p{ font-size:13px !important }
+.footer-contact-link{ font-size:12px !important }
+.footer-links a{ font-size:13px !important }
+.footer-col-title{ font-size:11px !important }
+.footer-bottom{ font-size:12px !important }
+
+/* Section description text */
+.section-heading > p{ font-size:14px !important }
+
+/* Hero description */
+.hero-description{ font-size:15.5px !important }
+
+/* Eyebrow */
+.eyebrow{ font-size:11.5px !important; letter-spacing:1.6px }
+
+/* Stats */
+.stat-item small{ font-size:11px !important }
+
+/* Industry b tags */
+.industry-list b{ font-size:11px !important }
+
+/* Tech wrap description */
+.tech-wrap > div:first-child > p:last-child{ font-size:13px !important }
+
+/* Solution tile labels */
+.solution-tile{ font-size:12px !important }
+
+/* Metric labels in dashboard — these are very small and intentional */
+.metric small{ font-size:7px !important }
+.metric b{ font-size:16px !important }
+
+/* Form submit area */
+.form-btn-row{ margin-top:8px }
